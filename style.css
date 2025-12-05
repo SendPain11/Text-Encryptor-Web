@@ -14,13 +14,35 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(#212130 50%, #39304A 50%);
+    background: linear-gradient(135deg, #212130 0%, #39304A 100%);
     padding: 20px;
-    transition: background 0.5s ease;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(33, 33, 48, 0.9) 0%,
+        rgba(57, 48, 74, 0.9) 50%,
+        rgba(33, 33, 48, 0.9) 100%);
+    z-index: -1;
 }
 
 body.dark-mode {
-    background: linear-gradient(#121212 50%, #1a1a2e 50%);
+    background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+}
+
+body.dark-mode::before {
+    background: linear-gradient(135deg,
+        rgba(18, 18, 18, 0.9) 0%,
+        rgba(26, 26, 46, 0.9) 50%,
+        rgba(18, 18, 18, 0.9) 100%);
 }
 
 .theme-toggle {
@@ -31,7 +53,7 @@ body.dark-mode {
 }
 
 .toggle-btn {
-    background: #35302d;
+    background: rgba(53, 48, 45, 0.9);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -41,13 +63,21 @@ body.dark-mode {
     align-items: center;
     gap: 8px;
     font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
 
 .toggle-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(53, 48, 45, 1);
+}
+
+body.dark-mode .toggle-btn {
+    background: rgba(40, 40, 60, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .toggle-btn i {
@@ -76,17 +106,21 @@ h1::after {
 }
 
 .container {
-    width: 500px;
-    background-color: #fff;
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.95);
     display: flex;
     flex-direction: column;
     padding: 30px 40px;
     border-radius: 1rem;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     animation: slideUp 0.5s ease;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
 }
 
 .container::before {
@@ -96,14 +130,16 @@ h1::after {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(to right, #4a90e2, #357abd, #4a90e2);
+    background: linear-gradient(90deg, #4a90e2, #357abd, #4a90e2);
+    background-size: 200% 100%;
     animation: shimmer 3s infinite linear;
 }
 
 body.dark-mode .container {
-    background-color: #1e1e2e;
+    background-color: rgba(30, 30, 46, 0.95);
     color: #e0e0e0;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 label {
@@ -128,20 +164,21 @@ textarea, input {
     border: 2px solid #ddd;
     resize: none;
     transition: all 0.3s ease;
-    background: #f9f9f9;
+    background: rgba(249, 249, 249, 0.8);
 }
 
 body.dark-mode textarea,
 body.dark-mode input {
-    background: #2d2d3d;
-    border-color: #444;
+    background: rgba(45, 45, 61, 0.8);
+    border-color: rgba(68, 68, 68, 0.5);
     color: #e0e0e0;
 }
 
 textarea:focus, input:focus {
     border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
     transform: translateY(-1px);
+    outline: none;
 }
 
 .buttons {
@@ -169,7 +206,7 @@ button {
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(74, 144, 226, 0.25);
+    box-shadow: 0 6px 12px rgba(74, 144, 226, 0.3);
 }
 
 button:active {
@@ -199,7 +236,7 @@ button:active::after {
 }
 
 #dec-btn:hover {
-    box-shadow: 0 6px 12px rgba(226, 74, 74, 0.25);
+    box-shadow: 0 6px 12px rgba(226, 74, 74, 0.3);
 }
 
 h2 {
@@ -220,23 +257,48 @@ body.dark-mode h2 {
     width: 100%;
     min-height: 120px;
     border-radius: 8px;
-    background: #f9f9f9;
+    background: rgba(249, 249, 249, 0.8);
     transition: all 0.3s ease;
     word-break: break-word;
     animation: fadeIn 0.5s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+#result:hover {
+    border-color: #4a90e2;
+}
+
+#result::after {
+    content: 'Click to copy';
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 10px;
+    color: #888;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#result:hover::after {
+    opacity: 1;
 }
 
 body.dark-mode #result {
-    background: #2d2d3d;
-    border-color: #444;
+    background: rgba(45, 45, 61, 0.8);
+    border-color: rgba(68, 68, 68, 0.5);
     color: #e0e0e0;
+}
+
+body.dark-mode #result::after {
+    color: #aaa;
 }
 
 /* Animations */
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -297,7 +359,7 @@ body.dark-mode .char-counter {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 3px solid #f3f3f3;
+    border: 3px solid rgba(243, 243, 243, 0.3);
     border-top: 3px solid #4a90e2;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -311,20 +373,89 @@ body.dark-mode .char-counter {
 /* Footer */
 footer {
     position: fixed;
-    bottom: 20px;
+    bottom: 0;
     width: 100%;
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 12px;
-    padding: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+body.dark-mode footer {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+footer i {
+    margin: 0 5px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Floating background elements */
+.floating-bg {
+    position: fixed;
+    border-radius: 50%;
+    opacity: 0.1;
+    z-index: -1;
+    animation: float 20s infinite linear;
+}
+
+.floating-bg:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, #4a90e2, #e24a4a);
+    top: 10%;
+    left: 10%;
+    animation-duration: 25s;
+}
+
+.floating-bg:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #357abd, #bd3535);
+    bottom: 20%;
+    right: 15%;
+    animation-duration: 20s;
+    animation-direction: reverse;
+}
+
+.floating-bg:nth-child(3) {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(45deg, #212130, #39304A);
+    top: 60%;
+    left: 80%;
+    animation-duration: 30s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(20px, 20px) rotate(90deg);
+    }
+    50% {
+        transform: translate(0, 40px) rotate(180deg);
+    }
+    75% {
+        transform: translate(-20px, 20px) rotate(270deg);
+    }
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
     .container {
-        width: 100%;
         padding: 20px;
-        margin: 0 15px;
+        margin: 15px;
+        width: calc(100% - 30px);
     }
     
     .theme-toggle {
@@ -337,7 +468,51 @@ footer {
         font-size: 14px;
     }
     
+    .toggle-btn span {
+        display: none;
+    }
+    
+    .toggle-btn i {
+        margin: 0;
+    }
+    
     h1 {
         font-size: 1.5rem;
     }
+    
+    footer {
+        font-size: 11px;
+        padding: 10px;
+    }
+    
+    .floating-bg {
+        display: none;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #4a90e2, #357abd);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #357abd, #2a6099);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #4a90e2, #2a4a6e);
 }
