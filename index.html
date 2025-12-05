@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Text Encryptor Web | SendPain11</title>
+</head>
+
+<body>
+
+    <div class="theme-toggle">
+        <button class="toggle-btn" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <span>Dark Mode</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <h1>Text Encryptor by SendPain11</h1>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" rows="5" cols="50">This is a secret message to encrypt! Don't forget me :)</textarea>
+        <div class="char-counter" id="message-counter">Characters: 0</div>
+        
+        <label for="key">Key:</label>
+        <input type="text" id="key" value="SendPain11" size="50">
+        <div class="char-counter" id="key-counter">Characters: 0</div>
+        
+        <div class="buttons">
+            <button id="enc-btn">
+                <i class="fas fa-lock"></i> Encrypt
+            </button>
+            <button id="dec-btn">
+                <i class="fas fa-unlock"></i> Decrypt
+            </button>
+        </div>
+
+        <h2>Result:</h2>
+        <div id="result"></div>
+
+    </div>
+
+    <footer>
+        Made with <i class="fas fa-heart" style="color: #e24a4a;"></i> by SendPain11
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(#212130 50%, #39304A 50%);
+    padding: 20px;
+    transition: background 0.5s ease;
+}
+
+body.dark-mode {
+    background: linear-gradient(#121212 50%, #1a1a2e 50%);
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.toggle-btn {
+    background: #35302d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn i {
+    font-size: 1.2rem;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, #4a90e2, #357abd);
+    border-radius: 2px;
+}
+
+.container {
+    width: 500px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px;
+    border-radius: 1rem;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    animation: slideUp 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #4a90e2, #357abd, #4a90e2);
+    animation: shimmer 3s infinite linear;
+}
+
+body.dark-mode .container {
+    background-color: #1e1e2e;
+    color: #e0e0e0;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode label {
+    color: #b0b0b0;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    resize: none;
+    transition: all 0.3s ease;
+    background: #f9f9f9;
+}
+
+body.dark-mode textarea,
+body.dark-mode input {
+    background: #2d2d3d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+textarea:focus, input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    transform: translateY(-1px);
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 12px;
+    font-size: 15px;
+    width: 50%;
+    border: none;
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(74, 144, 226, 0.25);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+#dec-btn {
+    background: linear-gradient(135deg, #e24a4a, #bd3535);
+}
+
+#dec-btn:hover {
+    box-shadow: 0 6px 12px rgba(226, 74, 74, 0.25);
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+body.dark-mode h2 {
+    color: #e0e0e0;
+}
+
+#result {
+    font-size: 14px;
+    border: 2px solid #ddd;
+    padding: 15px;
+    width: 100%;
+    min-height: 120px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+    word-break: break-word;
+    animation: fadeIn 0.5s ease;
+}
+
+body.dark-mode #result {
+    background: #2d2d3d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(74, 144, 226, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+    }
+}
+
+/* Character counter */
+.char-counter {
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+body.dark-mode .char-counter {
+    color: #888;
+}
+
+/* Encryption animation */
+.encrypting {
+    animation: pulse 1.5s infinite;
+}
+
+/* Loading animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4a90e2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+        margin: 0 15px;
+    }
+    
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .toggle-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+}
