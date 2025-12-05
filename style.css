@@ -45,45 +45,63 @@ body.dark-mode::before {
         rgba(18, 18, 18, 0.9) 100%);
 }
 
+/* ========== THEME TOGGLE ========== */
 .theme-toggle {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 25px;
+    right: 25px;
     z-index: 100;
 }
 
 .toggle-btn {
-    background: rgba(53, 48, 45, 0.9);
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    background: rgba(74, 144, 226, 0.15);
+    color: #4a90e2;
+    border: 2px solid rgba(74, 144, 226, 0.3);
+    padding: 12px 20px;
     border-radius: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 5px 20px rgba(74, 144, 226, 0.15);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 140px;
 }
 
 .toggle-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    background: rgba(53, 48, 45, 1);
-}
-
-body.dark-mode .toggle-btn {
-    background: rgba(40, 40, 60, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.25);
+    background: rgba(74, 144, 226, 0.2);
+    border-color: rgba(74, 144, 226, 0.5);
 }
 
 .toggle-btn i {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
 }
 
+.toggle-btn:hover i {
+    transform: rotate(15deg);
+}
+
+body.dark-mode .toggle-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== CONTAINER ========== */
 h1 {
     margin-bottom: 30px;
     font-size: 1.8rem;
@@ -142,6 +160,7 @@ body.dark-mode .container {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* ========== FORM ELEMENTS ========== */
 label {
     margin-bottom: 8px;
     font-size: 14px;
@@ -181,6 +200,7 @@ textarea:focus, input:focus {
     outline: none;
 }
 
+/* ========== BUTTONS ========== */
 .buttons {
     display: flex;
     gap: 10px;
@@ -239,6 +259,7 @@ button:active::after {
     box-shadow: 0 6px 12px rgba(226, 74, 74, 0.3);
 }
 
+/* ========== RESULT AREA ========== */
 h2 {
     margin-bottom: 10px;
     font-size: 1.5rem;
@@ -269,19 +290,27 @@ body.dark-mode h2 {
     border-color: #4a90e2;
 }
 
+/* COPY TO CLIPBOARD INDICATOR */
 #result::after {
-    content: 'Click to copy';
+    content: '📋 Click to copy';
     position: absolute;
-    bottom: 5px;
-    right: 10px;
-    font-size: 10px;
-    color: #888;
+    top: -30px;
+    right: 0;
+    font-size: 11px;
+    color: #4a90e2;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, top 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    z-index: 2;
 }
 
 #result:hover::after {
     opacity: 1;
+    top: -35px;
 }
 
 body.dark-mode #result {
@@ -291,10 +320,12 @@ body.dark-mode #result {
 }
 
 body.dark-mode #result::after {
-    color: #aaa;
+    background: rgba(30, 30, 46, 0.95);
+    color: #4a90e2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Animations */
+/* ========== ANIMATIONS ========== */
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -336,7 +367,23 @@ body.dark-mode #result::after {
     }
 }
 
-/* Character counter */
+@keyframes copySuccess {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(74, 144, 226, 0.2);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.copy-success {
+    animation: copySuccess 0.5s ease;
+}
+
+/* ========== CHARACTER COUNTER ========== */
 .char-counter {
     text-align: right;
     font-size: 12px;
@@ -349,12 +396,12 @@ body.dark-mode .char-counter {
     color: #888;
 }
 
-/* Encryption animation */
+/* ========== ENCRYPTION ANIMATION ========== */
 .encrypting {
     animation: pulse 1.5s infinite;
 }
 
-/* Loading animation */
+/* ========== LOADING ANIMATION ========== */
 .loading {
     display: inline-block;
     width: 20px;
@@ -370,7 +417,7 @@ body.dark-mode .char-counter {
     100% { transform: rotate(360deg); }
 }
 
-/* Footer */
+/* ========== FOOTER ========== */
 footer {
     position: fixed;
     bottom: 0;
@@ -398,7 +445,7 @@ footer i {
     50% { transform: scale(1.1); }
 }
 
-/* Floating background elements */
+/* ========== FLOATING BACKGROUND ========== */
 .floating-bg {
     position: fixed;
     border-radius: 50%;
@@ -450,7 +497,7 @@ footer i {
     }
 }
 
-/* Responsive adjustments */
+/* ========== RESPONSIVE DESIGN ========== */
 @media (max-width: 600px) {
     .container {
         padding: 20px;
@@ -459,13 +506,16 @@ footer i {
     }
     
     .theme-toggle {
-        top: 10px;
-        right: 10px;
+        top: 15px;
+        right: 15px;
     }
     
     .toggle-btn {
-        padding: 8px 16px;
-        font-size: 14px;
+        padding: 10px 12px;
+        min-width: auto;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
     }
     
     .toggle-btn span {
@@ -474,6 +524,7 @@ footer i {
     
     .toggle-btn i {
         margin: 0;
+        font-size: 1.2rem;
     }
     
     h1 {
@@ -490,7 +541,7 @@ footer i {
     }
 }
 
-/* Scrollbar styling */
+/* ========== SCROLLBAR ========== */
 ::-webkit-scrollbar {
     width: 8px;
 }

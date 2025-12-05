@@ -56,6 +56,8 @@ function updateResult(isEncrypting) {
     // Add loading animation
     resultDiv.innerHTML = '<div class="loading"></div> Processing...';
     resultDiv.style.textAlign = 'center';
+    resultDiv.style.color = '';
+    resultDiv.classList.remove('copy-success');
     
     // Add active state to clicked button
     if (isEncrypting) {
@@ -78,8 +80,11 @@ function updateResult(isEncrypting) {
             resultDiv.style.borderColor = '#e24a4a';
         }
 
+        // Set plain text content
+        resultDiv.innerHTML = '';
         resultDiv.textContent = result;
         resultDiv.style.textAlign = 'left';
+        resultDiv.style.color = '';
         
         // Add fade in animation
         resultDiv.style.animation = 'fadeIn 0.5s ease';
@@ -93,7 +98,6 @@ function updateResult(isEncrypting) {
 function updateCounters() {
     const message = document.getElementById("message").value;
     const key = document.getElementById("key").value;
-    const result = document.getElementById("result").textContent;
     
     document.getElementById("message-counter").textContent = `Message: ${message.length} characters`;
     document.getElementById("key-counter").textContent = `Key: ${key.length} characters`;
@@ -133,26 +137,91 @@ function initTheme() {
     }
 }
 
-// Copy result to clipboard
-function copyToClipboard() {
-    const result = document.getElementById("result").textContent;
+// Fallback copy function for older browsers
+function copyToClipboardFallback(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
     
-    if (!result || result.includes("Processing...")) {
+    try {
+        const successful = document.execCommand('copy');
+        return successful;
+    } catch (err) {
+        console.error('Fallback copy failed:', err);
+        return false;
+    } finally {
+        document.body.removeChild(textArea);
+    }
+}
+
+// Helper function to show copy success
+function showCopySuccess(resultDiv) {
+    const originalText = resultDiv.textContent;
+    resultDiv.classList.add('copy-success');
+    resultDiv.innerHTML = '<span style="color: #4a90e2; font-weight: 600;">✅ Copied to clipboard!</span>';
+    resultDiv.style.textAlign = 'center';
+    
+    setTimeout(() => {
+        resultDiv.textContent = originalText;
+        resultDiv.style.textAlign = 'left';
+        resultDiv.classList.remove('copy-success');
+    }, 1500);
+}
+
+// Helper function to show copy error
+function showCopyError(resultDiv) {
+    const originalText = resultDiv.textContent;
+    resultDiv.innerHTML = '<span style="color: #e24a4a;">❌ Failed to copy</span>';
+    resultDiv.style.textAlign = 'center';
+    
+    setTimeout(() => {
+        resultDiv.textContent = originalText;
+        resultDiv.style.textAlign = 'left';
+    }, 1500);
+}
+
+// Main copy function
+function copyToClipboard() {
+    const resultDiv = document.getElementById("result");
+    
+    // Get the actual text content
+    let result = resultDiv.textContent || resultDiv.innerText;
+    
+    // Check if result is valid
+    if (!result || 
+        result.includes("Processing...") || 
+        result.includes("Copied") ||
+        result.includes("Failed") ||
+        result.trim() === '') {
         return;
     }
     
-    navigator.clipboard.writeText(result).then(() => {
-        const originalText = result;
-        document.getElementById("result").textContent = "Copied to clipboard!";
-        document.getElementById("result").style.textAlign = 'center';
-        document.getElementById("result").style.color = '#4a90e2';
-        
-        setTimeout(() => {
-            document.getElementById("result").textContent = originalText;
-            document.getElementById("result").style.textAlign = 'left';
-            document.getElementById("result").style.color = '';
-        }, 1500);
-    });
+    // Try Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(result).then(() => {
+            showCopySuccess(resultDiv);
+        }).catch(err => {
+            console.error('Clipboard API failed:', err);
+            // Try fallback
+            if (copyToClipboardFallback(result)) {
+                showCopySuccess(resultDiv);
+            } else {
+                showCopyError(resultDiv);
+            }
+        });
+    } else {
+        // Use fallback for non-HTTPS or older browsers
+        if (copyToClipboardFallback(result)) {
+            showCopySuccess(resultDiv);
+        } else {
+            showCopyError(resultDiv);
+        }
+    }
 }
 
 // Add event listeners
@@ -192,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("message").addEventListener('input', debounceUpdate);
     document.getElementById("key").addEventListener('input', debounceUpdate);
     
-    // Add title animation
-    const title = document.querySelector('h1');
-    title.style.animation = 'slideUp 0.5s ease';
+    // Initialize counters
+    updateCounters();
 });
